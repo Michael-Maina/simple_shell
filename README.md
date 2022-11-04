@@ -35,7 +35,7 @@ This repository contains a C project aiming to recreate a simple version of a UN
   - write (man 2 write)
 
 ## Compilation
-The shell is be compiled this way:
+The shell is to be compiled this way:
 
 '''
 gcc -Wall -Werror -Wextra -pedantic -std=gnu89 *.c -o hsh
