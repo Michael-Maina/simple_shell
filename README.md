@@ -1,5 +1,5 @@
 # Simple Shell - UNIX Command Interpreter Project
-This! repository contains a C project aiming to recreate a simple version of a UNIX command interpreter.!
+This repository contains a C project aiming to recreate a simple version of a UNIX command interpreter.
 
 ## List of allowed functions and system calls
   - access (man 2 access)
