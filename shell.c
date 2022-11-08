@@ -1,12 +1,11 @@
-#include <stdio.h>
-#include <unistd.h>
-#include <string.h>
-#include <stdlib.h>
+#include "main.h"
+
 /**
  * main - execve example
  *
  * Return: Always 0.
  */
+
 int main()
 {
 	char *buffer;
@@ -37,7 +36,7 @@ int main()
 				perror("Error:");
 			}
 		}
-		if (strcmp (array[0], "exit") == 0)
+		if (_strcmp (array[0], "exit") == 0)
 			break;
 	}
 	return (0);
