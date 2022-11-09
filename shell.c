@@ -8,17 +8,18 @@
 
 int main()
 {
-	char *buffer;
+	char *buffer, *token;
 	size_t buffersize = 1024;
 	char *array[1024];
 	int i;
 
 	while (1)
 	{
+		write(1, "$ ", 2);
 		buffer = malloc(sizeof(char) * buffersize);
 		getline(&buffer, &buffersize, stdin);
 
-		char *token = strtok(buffer, " \n");
+		token = strtok(buffer, " \n");
 		i = 0;
 		while (token)
 		{
@@ -29,13 +30,17 @@ int main()
 			break;
 		if (fork() != 0)
 		{
-			wait();
+			wait(NULL);
 		}
 		else
 		{
+			if (_strncmp(array[0], "./", 2) != 0 && _strncmp(array[0], "/", 1) != 0)
+				path_finder(&array[0]);
+
 			if (execve(array[0], array, NULL) == -1)
 			{
-				perror("Error:");
+				perror("Error");
+				exit(100);
 			}
 		}
 	}
