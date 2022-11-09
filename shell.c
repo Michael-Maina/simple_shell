@@ -25,6 +25,8 @@ int main()
 			array[i++] = strdup(token);
 			token = strtok(NULL, " \n");
 		}
+		if (_strcmp (array[0], "exit") == 0)
+			break;
 		if (fork() != 0)
 		{
 			wait();
@@ -36,8 +38,6 @@ int main()
 				perror("Error:");
 			}
 		}
-		if (_strcmp (array[0], "exit") == 0)
-			break;
 	}
 	return (0);
 }

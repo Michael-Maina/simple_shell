@@ -70,3 +70,46 @@ int _strcmp(char *s1, char *s2)
 
 	return (s1[i] - s2[i]);
 }
+
+/**
+ * _strlen - returns the length of a string
+ * @s: string whose length is to be determined
+ * Return: Always 0
+ */
+
+int _strlen(char *s)
+{
+	int a;
+
+	for (a = 0; *s != '\0'; s++)
+		a++;
+
+	return (a);
+}
+
+/**
+ * *_strncpy - copies a string
+ * @dest: destination string
+ * @src: source string
+ * @n: number of bytes to be copied
+ * Return: pointer to dest
+ */
+
+char *_strncpy(char *dest, char *src, int n)
+{
+	int i = 0;
+
+	while (src[i] != '\0' && i < n)
+	{
+		dest[i] = src[i];
+		i++;
+	}
+
+	while (i < n)
+	{
+		dest[i] = '\0';
+		i++;
+	}
+
+	return (dest);
+}
