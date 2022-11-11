@@ -8,7 +8,7 @@
 
 char *_getenv(char *name)
 {
-	size_t len, cmd_len;
+	size_t len, cmd_len = 1024;
 	char *env_var, *token;
 	int i, x, j;
 
@@ -19,7 +19,6 @@ char *_getenv(char *name)
 		token = strtok(environ[i], "=");
 		if (_strcmp(name, token) == 0)
 		{
-			cmd_len = _strlen(environ[i]) - len;
 			env_var = malloc(sizeof(char) * cmd_len);
 			if (!env_var)
 			{
@@ -41,9 +40,3 @@ char *_getenv(char *name)
 
 	return (NULL);
 }
-/*
-int main()
-{
-	_getenv("PATH");
-	return 0;
-}*/
