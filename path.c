@@ -1,5 +1,12 @@
 #include "main.h"
 
+/**
+ * path_finder - finds if a command is located on PATH
+ * @cmd: command entered on stdin
+ *
+ * Return: nothing
+ */
+
 void path_finder(char **cmd)
 {
 	char *path, *token, *token_cmd, *temp;
@@ -11,7 +18,7 @@ void path_finder(char **cmd)
 
 	token = strtok(path, ":");
 
-	while(token)
+	while (token)
 	{
 		array[i++] = _strdup(token);
 		token = strtok(NULL, ":");
@@ -35,8 +42,9 @@ void path_finder(char **cmd)
 		else
 		{
 			*cmd = token_cmd;
-                        break;
+			break;
 
 		}
 	}
+	free(path);
 }

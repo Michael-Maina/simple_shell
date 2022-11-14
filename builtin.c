@@ -24,15 +24,14 @@ int check_cmd(char *command)
 
 /**
  * exec_builtin - executes builtin commands
- * @command - command to execute
+ * @command: command to execute
  * Return: 0 on success, -1 otherwise
  */
 
 int exec_builtin(char **command)
 {
 	int i = 0;
-	built_ins selector[] =
-	{
+	built_ins selector[] = {
 		{"exit", __exit},
 		{"env", _env},
 		{"clear", clear},

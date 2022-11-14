@@ -20,7 +20,8 @@ extern char **environ;
  *         a builtin command.
  */
 
-typedef struct builtin_cmd {
+typedef struct builtin_cmd
+{
 	char *command;
 	int (*func)(char **cmd);
 } built_ins;

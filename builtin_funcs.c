@@ -1,5 +1,11 @@
 #include "main.h"
 
+/**
+ * __exit - exits the shell
+ * @cmd: command
+ * Return: 0 on success, -1 otherwise
+ */
+
 int __exit(char **cmd)
 {
 	int i = 0, status;
@@ -10,9 +16,9 @@ int __exit(char **cmd)
 		return (0);
 	}
 
-	while(cmd[1][i])
+	while (cmd[1][i])
 	{
-		if(_isdigit(cmd[1][i]) == 0)
+		if (_isdigit(cmd[1][i]) == 0)
 		{
 			perror("ERROR!!!");
 			return (-1);
@@ -26,8 +32,8 @@ int __exit(char **cmd)
 
 /**
  * _env - prints the current environment
- *
- * Return: nothing
+ * @cmd: command
+ * Return: 0 on success, -1 otherwise
  */
 
 int _env(char **cmd)
@@ -46,9 +52,9 @@ int _env(char **cmd)
 
 
 /**
- * _clear - clears the terminal window
- *
- * Return: nothing
+ * clear - clears the terminal window
+ * @cmd: command
+ * Return: 0 on success, -1 otherwise
  */
 
 int clear(char **cmd)

@@ -6,11 +6,11 @@
  * Return: Always 0.
  */
 
-int main()
+int main(void)
 {
 	char *buffer, *token;
 	size_t buffersize = 1024;
-	char *array[1024];
+	char **array;
 	int i;
 	ssize_t get_return;
 	char **env = environ;
@@ -19,17 +19,23 @@ int main()
 
 	while (1)
 	{
+		buffer = NULL;
+		array = NULL;
+		array = malloc(buffersize);
 		write(1, "$ ", 2);
 		buffer = malloc(sizeof(char) * buffersize);
 		get_return = getline(&buffer, &buffersize, stdin);
 
 		if (get_return == -1)
+		{
+			free(buffer);
 			exit(98);
-
-		if (buffer == NULL)
-			continue;
+		}
 
 		token = strtok(buffer, " \n");
+		if (token == NULL)
+			continue;
+
 		i = 0;
 		while (token)
 		{
@@ -55,10 +61,13 @@ int main()
 				if (execve(array[0], array, env) == -1)
 				{
 					perror("Error");
+					free(buffer);
 					exit(100);
 				}
 			}
+			free(buffer);
 		}
 	}
+	free(buffer);
 	return (0);
 }

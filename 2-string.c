@@ -45,7 +45,7 @@ char *_strdup(char *str)
 	if (s == NULL)
 		return (NULL);
 
-	while(i <= len)
+	while (i <= len)
 	{
 		s[i] = str[i];
 		i++;
@@ -60,6 +60,7 @@ char *_strdup(char *str)
 *
 *Return: 1 if its )-9 else 0
 */
+
 int _isdigit(char c)
 {
 	if (c >= '0' && c <= '9')
