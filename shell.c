@@ -15,7 +15,7 @@ int main()
 	ssize_t get_return;
 	char **env = environ;
 
-	write(1, "\033[1;1H\033[2J", 10);
+	write(1, "\033[1;1H\033[2J", 10); /*clears terminal window */
 
 	while (1)
 	{

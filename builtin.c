@@ -10,7 +10,7 @@
 int check_cmd(char *command)
 {
 	int i = 0;
-	char *array_cmd[] = {"exit"};
+	char *array_cmd[] = {"exit", "env", "clear", NULL};
 
 	while (array_cmd[i])
 	{
@@ -25,20 +25,25 @@ int check_cmd(char *command)
 /**
  * exec_builtin - executes builtin commands
  * @command - command to execute
+ * Return: 0 on success, -1 otherwise
  */
 
-void (*exec_builtin(char **command))
+int exec_builtin(char **command)
 {
 	int i = 0;
 	built_ins selector[] =
 	{
 		{"exit", __exit},
 		{"env", _env},
+		{"clear", clear},
 		{NULL, NULL}
 	};
 
-	while (selector[i].command != NULL && selector[i].command != command[0])
+	while ((selector + i)->command)
+	{
+		if (_strcmp((selector + i)->command, command[0]) == 0)
+			return ((selector + i)->func(command));
 		i++;
-
-	return (selector[i].func);
+	}
+	return (-1);
 }

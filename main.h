@@ -22,7 +22,7 @@ extern char **environ;
 
 typedef struct builtin_cmd {
 	char *command;
-	void (*func)(char **cmd);
+	int (*func)(char **cmd);
 } built_ins;
 
 /* String manipulation functions */
@@ -38,10 +38,11 @@ char *_strtok(char *str, const char *delim);
 
 char *_getenv(char *name);
 void path_finder(char **cmd);
-void _env(char **cmd);
-void (*exec_builtin(char **command));
+int _env(char **cmd);
+int exec_builtin(char **command);
 int check_cmd(char *command);
-void __exit(char **cmd);
+int clear(char **cmd);
+int __exit(char **cmd);
 int _isdigit(char c);
 int _atoi(char *s);
 #endif
