@@ -15,6 +15,8 @@ int main()
 	ssize_t get_return;
 	char **env = environ;
 
+	write(1, "\033[1;1H\033[2J", 10);
+
 	while (1)
 	{
 		write(1, "$ ", 2);
@@ -34,9 +36,9 @@ int main()
 			array[i++] = _strdup(token);
 			token = strtok(NULL, " \n");
 		}
-		if (_strcmp(array[0], "exit") == 0)
+		if (check_cmd(array[0]) == 0)
 		{
-			__exit(array);
+			exec_builtin(array);
 		}
 		else
 		{
@@ -46,7 +48,8 @@ int main()
 			}
 			else
 			{
-				if (_strncmp(array[0], "./", 2) != 0 && _strncmp(array[0], "/", 1) != 0)
+				if (_strncmp(array[0], "./", 2) != 0 &&
+				    _strncmp(array[0], "/", 1) != 0)
 					path_finder(&array[0]);
 
 				if (execve(array[0], array, env) == -1)

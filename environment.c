@@ -40,3 +40,22 @@ char *_getenv(char *name)
 
 	return (NULL);
 }
+
+/**
+ * _env - prints the current environment
+ *
+ * Return: nothing
+ */
+
+void _env(char **cmd)
+{
+	int i = 0;
+	(void)cmd;
+
+	while (environ[i])
+	{
+		write(1, environ[i], _strlen(environ[i]));
+		write(1, "\n", 1);
+		i++;
+	}
+}

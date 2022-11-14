@@ -1,6 +1,8 @@
 #ifndef MAIN_H
 #define MAIN_H
 
+/* Libraries included */
+
 #include <stdio.h>
 #include <unistd.h>
 #include <string.h>
@@ -10,6 +12,18 @@
 #include <sys/stat.h>
 
 extern char **environ;
+
+/**
+ * struct builtin_cmd - struct type defining a functiomn pointer to a command
+ * @command: command to execute
+ * @func: A function pointer to a function that executes
+ *         a builtin command.
+ */
+
+typedef struct builtin_cmd {
+	char *command;
+	void (*func)(char **cmd);
+} built_ins;
 
 /* String manipulation functions */
 
@@ -24,7 +38,9 @@ char *_strtok(char *str, const char *delim);
 
 char *_getenv(char *name);
 void path_finder(char **cmd);
-
+void _env(char **cmd);
+void (*exec_builtin(char **command));
+int check_cmd(char *command);
 void __exit(char **cmd);
 int _isdigit(char c);
 int _atoi(char *s);
