@@ -24,4 +24,8 @@ char *_strtok(char *str, const char *delim);
 
 char *_getenv(char *name);
 void path_finder(char **cmd);
+
+void __exit(char **cmd);
+int _isdigit(char c);
+int _atoi(char *s);
 #endif
