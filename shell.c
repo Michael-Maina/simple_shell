@@ -10,20 +10,24 @@ int main(void)
 {
 	char *buffer, *token;
 	size_t buffersize = 1024;
-	char **array;
+	char *array[1024];
 	int i;
 	ssize_t get_return;
-	char **env = environ;
 
 	write(1, "\033[1;1H\033[2J", 10); /*clears terminal window */
 
 	while (1)
 	{
+		i = 0;
+		while(array[i++])
+			array[i] = NULL;
 		buffer = NULL;
-		array = NULL;
-		array = malloc(buffersize);
 		write(1, "$ ", 2);
-		buffer = malloc(sizeof(char) * buffersize);
+		buffer = malloc(sizeof(char *) * buffersize);
+
+		if (buffer == NULL)
+			exit(98);
+
 		get_return = getline(&buffer, &buffersize, stdin);
 
 		if (get_return == -1)
@@ -58,16 +62,13 @@ int main(void)
 				    _strncmp(array[0], "/", 1) != 0)
 					path_finder(&array[0]);
 
-				if (execve(array[0], array, env) == -1)
+				if (execve(array[0], array, environ) == -1)
 				{
 					perror("Error");
-					free(buffer);
 					exit(100);
 				}
 			}
-			free(buffer);
 		}
 	}
-	free(buffer);
 	return (0);
 }
