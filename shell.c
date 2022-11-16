@@ -9,7 +9,7 @@
 int main(int argc, char **argv)
 {
 	char *buffer, *token;
-	char ptr;
+	char *ptr;
 	size_t buffersize = 1024;
 	char *array[1024];
 	int i, status, counter = 0;
@@ -77,8 +77,8 @@ int main(int argc, char **argv)
 				{
 					write(2, argv[0], _strlen(argv[0]));
 					write(2, ": ", 2);
-					ptr = counter + '0';
-					write(2, &ptr, 1);
+					ptr = _itoa(counter);
+					write(2, ptr, _strlen(ptr));
 					write(2, ": ", 2);
 					write(2, array[0], _strlen(array[0]));
 					write(2, ": not found\n", 12);

@@ -46,4 +46,6 @@ int clear(char **cmd);
 int __exit(char **cmd);
 int _isdigit(char c);
 int _atoi(char *s);
+char *_itoa(unsigned int n);
+
 #endif
