@@ -9,9 +9,10 @@
 int main(int argc, char **argv)
 {
 	char *buffer, *token;
+	char ptr;
 	size_t buffersize = 1024;
 	char *array[1024];
-	int i, status;
+	int i, status, counter = 0;
 	ssize_t get_return;
 
 	(void)argc;
@@ -20,6 +21,7 @@ int main(int argc, char **argv)
 
 	while (1)
 	{
+		counter++;
 		i = 0;
 		while(i < 1024)
 			array[i++] = NULL;
@@ -73,7 +75,13 @@ int main(int argc, char **argv)
 
 				if (execve(array[0], array, environ) == -1)
 				{
-					perror(argv[0]);
+					write(2, argv[0], _strlen(argv[0]));
+					write(2, ": ", 2);
+					ptr = counter + '0';
+					write(2, &ptr, 1);
+					write(2, ": ", 2);
+					write(2, array[0], _strlen(array[0]));
+					write(2, ": not found\n", 12);
 					exit(EXIT_FAILURE);
 				}
 				return (EXIT_SUCCESS);
