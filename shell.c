@@ -24,7 +24,10 @@ int main(int argc, char **argv)
 		while(i < 1024)
 			array[i++] = NULL;
 		buffer = NULL;
-		write(1, "$ ", 2);
+
+		if (isatty(STDIN_FILENO))
+			write(1, "$ ", 2);
+
 		buffer = malloc(sizeof(char *) * buffersize);
 
 		if (buffer == NULL)
