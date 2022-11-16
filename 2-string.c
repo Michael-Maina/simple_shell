@@ -43,14 +43,16 @@ char *_strdup(char *str)
 	s = malloc(sizeof(char *) * (len + 1));
 
 	if (s == NULL)
+	{
+		free(s);
 		return (NULL);
+	}
 
 	while (i <= len)
 	{
 		s[i] = str[i];
 		i++;
 	}
-
 	return (s);
 }
 /**

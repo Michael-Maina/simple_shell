@@ -19,14 +19,17 @@ int main(void)
 	while (1)
 	{
 		i = 0;
-		while(array[i++])
-			array[i] = NULL;
+		while(i < 1024)
+			array[i++] = NULL;
 		buffer = NULL;
 		write(1, "$ ", 2);
 		buffer = malloc(sizeof(char *) * buffersize);
 
 		if (buffer == NULL)
+		{
+			free(buffer);
 			exit(98);
+		}
 
 		get_return = getline(&buffer, &buffersize, stdin);
 
@@ -46,6 +49,7 @@ int main(void)
 			array[i++] = _strdup(token);
 			token = strtok(NULL, " \n");
 		}
+		free(buffer);
 		if (check_cmd(array[0]) == 0)
 		{
 			exec_builtin(array);

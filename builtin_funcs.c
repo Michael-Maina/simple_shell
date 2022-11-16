@@ -8,11 +8,11 @@
 
 int __exit(char **cmd)
 {
-	int i = 0, status;
+	int i = 0, status = 0;
 
-	if (cmd[1] == NULL)
+	if (!cmd[1])
 	{
-		exit(EXIT_SUCCESS);
+		exit(0);
 		return (0);
 	}
 

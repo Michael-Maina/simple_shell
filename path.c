@@ -46,5 +46,9 @@ void path_finder(char **cmd)
 
 		}
 	}
+	i = 0;
+	while(array[i++])
+		array[i] = NULL;
+
 	free(path);
 }
