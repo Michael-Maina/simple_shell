@@ -10,6 +10,7 @@ int main(int argc, char **argv)
 {
 	char *buffer, *token;
 	char *ptr;
+	char hs[1024];
 	size_t buffersize = 1024;
 	char *array[1024];
 	int i, status, counter = 0;
@@ -53,7 +54,7 @@ int main(int argc, char **argv)
 		i = 0;
 		while (token)
 		{
-			array[i++] = _strdup(token);
+			array[i++] = _strcpy(hs, token);
 			token = strtok(NULL, " \n");
 		}
 		free(buffer);
@@ -84,9 +85,8 @@ int main(int argc, char **argv)
 					write(2, ": not found\n", 12);
 					exit(EXIT_FAILURE);
 				}
-				return (EXIT_SUCCESS);
 			}
 		}
 	}
-	return (1);
+	return (EXIT_SUCCESS);
 }
