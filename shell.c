@@ -11,7 +11,7 @@ int main(int argc, char **argv)
 	char *buffer, *token;
 	size_t buffersize = 1024;
 	char *array[1024];
-	int i;
+	int i, status;
 	ssize_t get_return;
 
 	(void)argc;
@@ -24,7 +24,8 @@ int main(int argc, char **argv)
 		while(i < 1024)
 			array[i++] = NULL;
 		buffer = NULL;
-		write(1, "$ ", 2);
+		if(isatty(STDIN_FILENO))
+			write(1, "$ ", 2);
 		buffer = malloc(sizeof(char *) * buffersize);
 
 		if (buffer == NULL)
@@ -60,7 +61,7 @@ int main(int argc, char **argv)
 		{
 			if (fork() != 0)
 			{
-				wait(NULL);
+				wait(&status);
 			}
 			else
 			{
@@ -71,8 +72,9 @@ int main(int argc, char **argv)
 				if (execve(array[0], array, environ) == -1)
 				{
 					perror(argv[0]);
-					exit(100);
+					exit(EXIT_FAILURE);
 				}
+				return (EXIT_SUCCESS);
 			}
 		}
 	}
