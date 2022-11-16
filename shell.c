@@ -6,13 +6,15 @@
  * Return: Always 0.
  */
 
-int main(void)
+int main(int argc, char **argv)
 {
 	char *buffer, *token;
 	size_t buffersize = 1024;
 	char *array[1024];
 	int i;
 	ssize_t get_return;
+
+	(void)argc;
 
 	write(1, "\033[1;1H\033[2J", 10); /*clears terminal window */
 
@@ -68,7 +70,7 @@ int main(void)
 
 				if (execve(array[0], array, environ) == -1)
 				{
-					perror("Error");
+					perror(argv[0]);
 					exit(100);
 				}
 			}
