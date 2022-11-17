@@ -72,7 +72,7 @@ int main(int argc, char **argv)
 				    _strncmp(array[0], "/", 1) != 0)
 					path_finder(&array[0]);
 
-				if (execve(array[0], array, environ) == -1)
+				if (execve(array[0], array, NULL) == -1)
 				{
 					write(2, argv[0], _strlen(argv[0]));
 					write(2, ": ", 2);
