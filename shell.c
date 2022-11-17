@@ -10,7 +10,6 @@ int main(int argc, char **argv)
 {
 	char *buffer, *token;
 	char *ptr;
-	char hs[1024];
 	size_t buffersize = 1024;
 	char *array[1024];
 	int i, status, counter = 0;
@@ -18,7 +17,7 @@ int main(int argc, char **argv)
 
 	(void)argc;
 
-	write(1, "\033[1;1H\033[2J", 10); /*clears terminal window */
+	/*write(1, "\033[1;1H\033[2J", 10);*/ /*clears terminal window */
 
 	while (1)
 	{
@@ -35,8 +34,7 @@ int main(int argc, char **argv)
 
 		if (buffer == NULL)
 		{
-			free(buffer);
-			exit(98);
+			continue;
 		}
 
 		get_return = getline(&buffer, &buffersize, stdin);
@@ -54,7 +52,7 @@ int main(int argc, char **argv)
 		i = 0;
 		while (token)
 		{
-			array[i++] = _strcpy(hs, token);
+			array[i++] = _strdup(token);
 			token = strtok(NULL, " \n");
 		}
 		free(buffer);

@@ -36,6 +36,7 @@ int _strlen(char *s);
 int _strncmp(char *s1, char *s2, int n);
 char *_strdup(char *str);
 char *_strtok(char *str, const char *delim);
+char *_memset(char *s, char b, unsigned int n);
 
 char *_getenv(char *name);
 void path_finder(char **cmd);
@@ -47,5 +48,6 @@ int __exit(char **cmd);
 int _isdigit(char c);
 int _atoi(char *s);
 char *_itoa(unsigned int n);
-
+void exec(char **cmd, int counter, char **argv);
+char **parser(char *buffer);
 #endif
