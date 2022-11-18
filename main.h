@@ -27,13 +27,16 @@ typedef struct builtin_cmd
 } built_ins;
 
 /* String manipulation functions */
+char *_strtok(char *str, const char *delim);
+unsigned int check_delim(char c, const char *str);
 
 char *_strcpy(char *dest, char *src);
 char *_strcat(char *dest, char *src);
 int _strcmp(char *s1, char *s2);
 char *_strncpy(char *dest, char *src, int n);
 int _strlen(char *s);
-int _strncmp(char *s1, char *s2, int n);
+/*int _strncmp(char *s1, char *s2, int n);*/
+int _strncmp(const char *s1, const char *s2, size_t n);
 char *_strdup(char *str);
 char *_strtok(char *str, const char *delim);
 char *_memset(char *s, char b, unsigned int n);
@@ -54,4 +57,5 @@ void printE(int counter, char *cmd, char *argv);
 void execute(char **array, int counter, char **argv, char *buffer);
 char *_getline();
 void hashtag_handle(char *buff);
+char *build(char *token, char *value);
 #endif
