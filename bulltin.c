@@ -7,7 +7,7 @@
  * @c:Excute Count
  * Return: Void (Exit Statue)
  */
-void  exit_bul(char **cmd, char *input, char **argv, int c)
+void exit_bul(char **cmd, char *input, char **argv, int c)
 {
 	int statue, i = 0;
 
@@ -40,7 +40,7 @@ void  exit_bul(char **cmd, char *input, char **argv, int c)
  * @cmd: Parsed Command
  * @er: Statue Last Command Excuted
  * Return: 0 Succes 1 Failed (For Old Pwd Always 0 Case No Old PWD)
- */
+ *
 int change_dir(char **cmd, __attribute__((unused))int er)
 {
 	int value = -1;
@@ -67,7 +67,7 @@ int change_dir(char **cmd, __attribute__((unused))int er)
 		setenv("PWD", cwd, 1);
 	}
 	return (0);
-}
+}*/
 /**
  * dis_env - Display Enviroment Variable
  * @cmd:Parsed Command
@@ -92,7 +92,7 @@ size_t i;
  * @cmd:Parsed Command
  * @er: Statue Of Last Command Excuted
  * Return: 0 Succes -1 Fail
- */
+ *
 int display_help(char **cmd, __attribute__((unused))int er)
 {
 	int fd, fw, rd = 1;
@@ -115,13 +115,13 @@ int display_help(char **cmd, __attribute__((unused))int er)
 	}
 	_putchar('\n');
 	return (0);
-}
+}*/
 /**
  * echo_bul - Excute Echo Cases
  * @st:Statue Of Last Command Excuted
  * @cmd: Parsed Command
  * Return: Always 0 Or Excute Normal Echo
- */
+ *
 int echo_bul(char **cmd, int st)
 {
 	char *path;
@@ -150,4 +150,4 @@ int echo_bul(char **cmd, int st)
 		return (print_echo(cmd));
 
 	return (1);
-}
+}*/

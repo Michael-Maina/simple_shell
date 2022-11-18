@@ -10,11 +10,11 @@
 int handle_builtin(char **cmd, int er)
 {
 	 bul_t bil[] = {
-		{"cd", change_dir},
+		/*{"cd", change_dir},*/
 		{"env", dis_env},
-		{"help", display_help},
+		/*{"help", display_help},
 		{"echo", echo_bul},
-		{"history", history_dis},
+		{"history", history_dis},*/
 		{NULL, NULL}
 	};
 	int i = 0;
@@ -78,11 +78,11 @@ int check_cmd(char **cmd, char *input, int c, char **argv)
  * signal_to_handel - Handle ^C
  * @sig:Captured Signal
  * Return: Void
- */
+ /
 void signal_to_handel(int sig)
 {
 	if (sig == SIGINT)
 	{
 		PRINTER("\n$ ");
 	}
-}
+}*/
