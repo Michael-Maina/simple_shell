@@ -15,6 +15,7 @@ int __exit(char **cmd, int counter, char *argv)
 
 	if (!cmd[1])
 	{
+		free(cmd);
 		exit(0);
 		return (0);
 	}
@@ -45,13 +46,17 @@ int __exit(char **cmd, int counter, char *argv)
 /**
  * _env - prints the current environment
  * @cmd: command
+ * @counter: command no
+ * @argv: argument vector
  * Return: 0 on success, -1 otherwise
  */
 
-int _env(char **cmd)
+int _env(char **cmd, int counter, char *argv)
 {
 	int i = 0;
 	(void)cmd;
+	(void)counter;
+	(void)argv;
 
 	while (environ[i])
 	{
@@ -66,12 +71,16 @@ int _env(char **cmd)
 /**
  * clear - clears the terminal window
  * @cmd: command
+ * @counter: command no
+ * @argv: argument vector
  * Return: 0 on success, -1 otherwise
  */
 
-int clear(char **cmd)
+int clear(char **cmd, int counter, char *argv)
 {
 	(void)cmd;
+	(void)counter;
+	(void)argv;
 
 	write(1, "\033[1;1H\033[2J", 10);
 
