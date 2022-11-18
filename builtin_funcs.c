@@ -16,7 +16,7 @@ int __exit(char **cmd, int counter, char *argv)
 	if (!cmd[1])
 	{
 		free(cmd);
-		exit(EXIT_SUCCESS);
+		exit(0);
 		return (0);
 	}
 
