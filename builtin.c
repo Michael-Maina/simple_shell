@@ -10,7 +10,7 @@
 int check_cmd(char *command)
 {
 	int i = 0;
-	char *array_cmd[] = {"exit", "env", "clear", NULL};
+	char *array_cmd[] = {"env", "clear", NULL};
 
 	while (array_cmd[i])
 	{
@@ -32,7 +32,6 @@ int exec_builtin(char **command)
 {
 	int i = 0;
 	built_ins selector[] = {
-		{"exit", __exit},
 		{"env", _env},
 		{"clear", clear},
 		{NULL, NULL}

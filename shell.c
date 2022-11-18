@@ -27,7 +27,9 @@ int main(int argc, char **argv)
 		if (c == '\0')
 			continue;
 		array = parser(buffer);
-		if (check_cmd(array[0]) == 0)
+		if (_strcmp(array[0], "exit") == 0)
+			__exit(array, counter, argv[0]);
+		else if (check_cmd(array[0]) == 0)
 		{
 			exec_builtin(array);
 			free(array);

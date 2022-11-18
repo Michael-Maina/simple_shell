@@ -47,7 +47,7 @@ int _env(char **cmd);
 int exec_builtin(char **command);
 int check_cmd(char *command);
 int clear(char **cmd);
-int __exit(char **cmd);
+int __exit(char **cmd, int counter, char *argv);
 int _isdigit(char c);
 int _atoi(char *s);
 char *_itoa(unsigned int n);

@@ -3,16 +3,20 @@
 /**
  * __exit - exits the shell
  * @cmd: command
+ * @counter: no command executed
+ * @argv: argument vector
  * Return: 0 on success, -1 otherwise
  */
 
-int __exit(char **cmd)
+int __exit(char **cmd, int counter, char *argv)
 {
 	int i = 0, status = 0;
+	char *ptr;
 
 	if (!cmd[1])
 	{
-		exit(0);
+		free(cmd);
+		exit(EXIT_SUCCESS);
 		return (0);
 	}
 
@@ -20,12 +24,21 @@ int __exit(char **cmd)
 	{
 		if (_isdigit(cmd[1][i]) == 0)
 		{
-			perror("ERROR!!!");
+			write(2, argv, _strlen(argv));
+			write(2, ": ", 2);
+			ptr = _itoa(counter);
+			write(2, ptr, _strlen(ptr));
+			write(2, ": ", 2);
+			write(2, cmd[0], _strlen(cmd[0]));
+			write(2, ": Illegal number: ", 18);
+			write(2, cmd[1], _strlen(cmd[1]));
+			write(2, "\n", 1);
 			return (-1);
 		}
 	i++;
 	}
 	status = _atoi(cmd[1]);
+	free(cmd);
 	exit(status);
 	return (0);
 }

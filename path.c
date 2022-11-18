@@ -1,7 +1,7 @@
 #include "main.h"
 
 /**
- * path_cmd -  Search In $PATH For Excutable Command
+ * path_finder -  Search In $PATH For Excutable Command
  * @cmd: Parsed Input
  * Return: 1  Failure  0  Success.
  */
@@ -19,15 +19,12 @@ void path_finder(char **cmd)
 		{
 			*cmd = _strdup(cmd_path);
 			free(cmd_path);
-			free(path);
-			return ;
+			break;
 		}
 		free(cmd_path);
 		value = strtok(NULL, ":");
 	}
 	free(path);
-
-	return ;
 }
 /**
  * build - Build Command
