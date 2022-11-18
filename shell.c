@@ -10,7 +10,7 @@
 
 int main(int argc, char **argv)
 {
-	char *buffer, **array;
+	char *buffer, **array, c;
 	int counter = 0;
 
 	(void)argc;
@@ -22,7 +22,9 @@ int main(int argc, char **argv)
 
 		buffer = _getline();
 
-		if (!buffer)
+		c = buffer[0];
+
+		if (c == '\0')
 			continue;
 		array = parser(buffer);
 		if (check_cmd(array[0]) == 0)
