@@ -1,5 +1,11 @@
 #include "main.h"
-
+/**
+*printE - Prints error message
+*
+*@counter: command no
+*@cmd: command input
+*@argv: commanline argument
+*/
 void printE(int counter, char *cmd, char *argv)
 {
 	char *ptr;

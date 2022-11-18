@@ -3,44 +3,37 @@
 /**
  * main - execve example
  *
+ *@argc: number of arguments
+ *@argv: argument vectors
  * Return: Always 0.
  */
 
 int main(int argc, char **argv)
 {
-	char *buffer;
+	char *buffer, **array;
 	size_t buffersize = 1024;
-	char **array;
-	int status, counter = 0;
+	int counter = 0;
 	ssize_t get_return;
 
 	(void)argc;
-
-	/*write(1, "\033[1;1H\033[2J", 10);*/ /*clears terminal window */
-
 	while (1)
 	{
 		counter++;
 		buffer = NULL;
 
-		if(isatty(STDIN_FILENO))
+		if (isatty(STDIN_FILENO))
 			write(1, "$ ", 2);
 
 		buffer = malloc(sizeof(char *) * buffersize);
-
 		if (buffer == NULL)
-		{
 			continue;
-		}
 
 		get_return = getline(&buffer, &buffersize, stdin);
-
 		if (get_return == -1)
 		{
 			free(buffer);
 			exit(0);
 		}
-
 		array = parser(buffer);
 		if (check_cmd(array[0]) == 0)
 		{
@@ -52,30 +45,19 @@ int main(int argc, char **argv)
 			continue;
 		}
 		else
-		{
-			if (fork() != 0)
-			{
-				wait(&status);
-			}
-			else
-			{
-				if (_strncmp(array[0], "./", 2) != 0 &&
-				    _strncmp(array[0], "/", 1) != 0)
-					path_finder(&array[0]);
-
-				if (execve(array[0], array, environ) == -1)
-				{
-					printE(counter, array[0], argv[0]);
-					free(array);
-					free(buffer);
-					exit(EXIT_FAILURE);
-				}
-				return (EXIT_SUCCESS);
-			}
-		}
+			execute(array, counter, argv, buffer);
+		free(array);
+		free(buffer);
 	}
 	return (EXIT_SUCCESS);
 }
+/**
+*parser- parses the commmand input
+*
+*@buffer: string containing command
+*
+*Return: Parsed command
+*/
 char **parser(char *buffer)
 {
 	char **cmd, *token;
@@ -98,4 +80,35 @@ char **parser(char *buffer)
 	}
 	cmd[i] = NULL;
 	return (cmd);
+}
+/**
+*execute - executes commands within the shell
+*
+*@array: parsed command
+*@counter: command no
+*@argv: commandline arguments
+*@buffer:buffer containing input
+*/
+void execute(char **array, int counter, char **argv, char *buffer)
+{
+	int status;
+
+	if (fork() != 0)
+	{
+		wait(&status);
+	}
+	else
+	{
+		if (_strncmp(array[0], "./", 2) != 0 &&
+		_strncmp(array[0], "/", 1) != 0)
+			path_finder(&array[0]);
+
+		if (execve(array[0], array, environ) == -1)
+		{
+			printE(counter, array[0], argv[0]);
+			free(array);
+			free(buffer);
+			exit(EXIT_FAILURE);
+		}
+	}
 }

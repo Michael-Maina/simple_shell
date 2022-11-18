@@ -19,8 +19,6 @@ char *_memcpy(char *dest, char *src, unsigned int n)
 	return (dest);
 }
 
-#include "main.h"
-
 /**
  * *_memset - fills memory with a constant byte
  * @s: pointer to string s
@@ -53,11 +51,10 @@ char *_itoa(unsigned int n)
 
 	num = n;
 	while (num != 0)
-        {
-                len++;
-                num /= 10;
-        }
-
+	{
+		len++;
+		num /= 10;
+	}
 	s = malloc(len + 1);
 	if (!s)
 		return (NULL);
@@ -71,11 +68,11 @@ char *_itoa(unsigned int n)
 	s[i] = (n % 10) + '0';
 
 	for (i = 0; i < (len / 2); i++)
-        {
-                temp = s[i];
-                s[i] = s[(len - 1) - i];
-                s[(len - 1) - i] = temp;
-        }
+	{
+		temp = s[i];
+		s[i] = s[(len - 1) - i];
+		s[(len - 1) - i] = temp;
+	}
 	s[i + 1] = '\0';
 	return (s);
 }

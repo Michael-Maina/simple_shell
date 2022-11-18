@@ -15,9 +15,7 @@ void path_finder(char **cmd)
 	int j, i = 0, k;
 
 	path = _getenv("PATH");
-
 	token = strtok(path, ":");
-
 	while (token)
 	{
 		array[i++] = _strdup(token);
@@ -46,9 +44,5 @@ void path_finder(char **cmd)
 
 		}
 	}
-	i = 0;
-	while(array[i++])
-		array[i] = NULL;
-
 	free(path);
 }
