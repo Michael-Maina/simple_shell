@@ -52,4 +52,6 @@ void exec(char **cmd, int counter, char **argv);
 char **parser(char *buffer);
 void printE(int counter, char *cmd, char *argv);
 void execute(char **array, int counter, char **argv, char *buffer);
+char *_getline();
+void hashtag_handle(char *buff);
 #endif

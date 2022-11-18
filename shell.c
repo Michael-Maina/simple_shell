@@ -11,29 +11,20 @@
 int main(int argc, char **argv)
 {
 	char *buffer, **array;
-	size_t buffersize = 1024;
+	/*size_t buffersize = 1024;*/
 	int counter = 0;
-	ssize_t get_return;
 
 	(void)argc;
 	while (1)
 	{
 		counter++;
-		buffer = NULL;
-
 		if (isatty(STDIN_FILENO))
 			write(1, "$ ", 2);
 
-		buffer = malloc(sizeof(char *) * buffersize);
-		if (buffer == NULL)
-			continue;
+		buffer = _getline();
 
-		get_return = getline(&buffer, &buffersize, stdin);
-		if (get_return == -1)
-		{
-			free(buffer);
-			exit(0);
-		}
+		if (!buffer)
+			continue;
 		array = parser(buffer);
 		if (check_cmd(array[0]) == 0)
 		{
@@ -49,7 +40,7 @@ int main(int argc, char **argv)
 		free(array);
 		free(buffer);
 	}
-	return (EXIT_SUCCESS);
+	return (0);
 }
 /**
 *parser- parses the commmand input
