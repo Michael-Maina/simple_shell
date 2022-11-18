@@ -1,90 +1,114 @@
-#include "shell.h"
+#include "main.h"
 
 /**
- * main - Simple Shell (Hsh)
- * @argc: Argument Count
- * @argv:Argument Value
- * Return: Exit Value By Status
+ * main - execve example
+ *
+ *@argc: number of arguments
+ *@argv: argument vectors
+ * Return: Always 0.
  */
 
-int main(__attribute__((unused)) int argc, char **argv)
+int main(int argc, char **argv)
 {
-	char *input, **cmd;
-	int counter = 0, statue = 1, st = 0;
+	char *buffer, **array;
+	size_t buffersize = 1024;
+	int counter = 0;
+	ssize_t get_return;
 
-	if (argv[1] != NULL)
-		read_file(argv[1], argv);
-	signal(SIGINT, signal_to_handel);
-	while (statue)
+	(void)argc;
+	while (1)
 	{
 		counter++;
+		buffer = NULL;
+
 		if (isatty(STDIN_FILENO))
-			prompt();
-		input = _getline();
-		if (input[0] == '\0')
-		{
+			write(1, "$ ", 2);
+
+		buffer = malloc(sizeof(char *) * buffersize);
+		if (buffer == NULL)
 			continue;
-		}
-		history(input);
-		cmd = parse_cmd(input);
-		if (_strcmp(cmd[0], "exit") == 0)
+
+		get_return = getline(&buffer, &buffersize, stdin);
+		if (get_return == -1)
 		{
-			exit_bul(cmd, input, argv, counter);
+			free(buffer);
+			exit(0);
 		}
-		else if (check_builtin(cmd) == 0)
+		array = parser(buffer);
+		if (check_cmd(array[0]) == 0)
 		{
-			st = handle_builtin(cmd, st);
-			free_all(cmd, input);
+			exec_builtin(array);
+			free(array);
+			free(buffer);
+			array = NULL;
+			buffer = NULL;
 			continue;
 		}
 		else
-		{
-			st = check_cmd(cmd, input, counter, argv);
-
-		}
-		free_all(cmd, input);
+			execute(array, counter, argv, buffer);
+		free(array);
+		free(buffer);
 	}
-	return (statue);
+	return (EXIT_SUCCESS);
 }
 /**
- * check_builtin - check builtin
- *
- * @cmd:command to check
- * Return: 0 Succes -1 Fail
- */
-int check_builtin(char **cmd)
+*parser- parses the commmand input
+*
+*@buffer: string containing command
+*
+*Return: Parsed command
+*/
+char **parser(char *buffer)
 {
-	bul_t fun[] = {
-		{"cd", NULL},
-		{"help", NULL},
-		{"echo", NULL},
-		{"history", NULL},
-		{NULL, NULL}
-	};
-	int i = 0;
-		if (*cmd == NULL)
-	{
-		return (-1);
-	}
-
-	while ((fun + i)->command)
-	{
-		if (_strcmp(cmd[0], (fun + i)->command) == 0)
-			return (0);
-		i++;
-	}
-	return (-1);
-}
-/**
- * creat_envi - Creat Array of Enviroment Variable
- * @envi: Array of Enviroment Variable
- * Return: Void
- */
-void creat_envi(char **envi)
-{
+	char **cmd, *token;
 	int i;
 
-	for (i = 0; environ[i]; i++)
-		envi[i] = _strdup(environ[i]);
-	envi[i] = NULL;
+	if (buffer == NULL)
+		return (NULL);
+
+	token = strtok(buffer, " \n");
+	if (token == NULL)
+		return (NULL);
+
+	cmd = malloc(sizeof(char *) * 1024);
+
+	i = 0;
+	while (token)
+	{
+		cmd[i++] = _strdup(token);
+		token = strtok(NULL, " \n");
+	}
+	cmd[i] = NULL;
+	return (cmd);
+}
+/**
+*execute - executes commands within the shell
+*
+*@array: parsed command
+*@counter: command no
+*@argv: commandline arguments
+*@buffer:buffer containing input
+*/
+void execute(char **array, int counter, char **argv, char *buffer)
+{
+	int status;
+
+	if (fork() != 0)
+	{
+		wait(&status);
+	}
+	else
+	{
+		if (_strncmp(array[0], "./", 2) != 0 &&
+		_strncmp(array[0], "/", 1) != 0)
+			path_finder(&array[0]);
+
+		if (execve(array[0], array, environ) == -1)
+		{
+			printE(counter, array[0], argv[0]);
+			free(array);
+			free(buffer);
+			exit(EXIT_FAILURE);
+		}
+	}
 }
