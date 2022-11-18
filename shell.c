@@ -8,11 +8,10 @@
 
 int main(int argc, char **argv)
 {
-	char *buffer, *token;
-	char *ptr;
+	char *buffer;
 	size_t buffersize = 1024;
-	char *array[1024];
-	int i, status, counter = 0;
+	char **array;
+	int status, counter = 0;
 	ssize_t get_return;
 
 	(void)argc;
@@ -22,9 +21,6 @@ int main(int argc, char **argv)
 	while (1)
 	{
 		counter++;
-		i = 0;
-		while(i < 1024)
-			array[i++] = NULL;
 		buffer = NULL;
 
 		if(isatty(STDIN_FILENO))
@@ -42,23 +38,18 @@ int main(int argc, char **argv)
 		if (get_return == -1)
 		{
 			free(buffer);
-			exit(98);
+			exit(0);
 		}
 
-		token = strtok(buffer, " \n");
-		if (token == NULL)
-			continue;
-
-		i = 0;
-		while (token)
-		{
-			array[i++] = _strdup(token);
-			token = strtok(NULL, " \n");
-		}
-		free(buffer);
+		array = parser(buffer);
 		if (check_cmd(array[0]) == 0)
 		{
 			exec_builtin(array);
+			free(array);
+			free(buffer);
+			array = NULL;
+			buffer = NULL;
+			continue;
 		}
 		else
 		{
@@ -72,19 +63,39 @@ int main(int argc, char **argv)
 				    _strncmp(array[0], "/", 1) != 0)
 					path_finder(&array[0]);
 
-				if (execve(array[0], array, NULL) == -1)
+				if (execve(array[0], array, environ) == -1)
 				{
-					write(2, argv[0], _strlen(argv[0]));
-					write(2, ": ", 2);
-					ptr = _itoa(counter);
-					write(2, ptr, _strlen(ptr));
-					write(2, ": ", 2);
-					write(2, array[0], _strlen(array[0]));
-					write(2, ": not found\n", 12);
+					printE(counter, array[0], argv[0]);
+					free(array);
+					free(buffer);
 					exit(EXIT_FAILURE);
 				}
+				return (EXIT_SUCCESS);
 			}
 		}
 	}
 	return (EXIT_SUCCESS);
+}
+char **parser(char *buffer)
+{
+	char **cmd, *token;
+	int i;
+
+	if (buffer == NULL)
+		return (NULL);
+
+	token = strtok(buffer, " \n");
+	if (token == NULL)
+		return (NULL);
+
+	cmd = malloc(sizeof(char *) * 1024);
+
+	i = 0;
+	while (token)
+	{
+		cmd[i++] = _strdup(token);
+		token = strtok(NULL, " \n");
+	}
+	cmd[i] = NULL;
+	return (cmd);
 }
